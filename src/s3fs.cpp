@@ -3489,8 +3489,8 @@ static int readdir_multi_head(const std::string& strpath, const S3ObjList& head,
 
         headers_t   dummy_header;
         dummy_header["Content-Type"]     = "application/x-directory";          // directory
-        dummy_header["x-amz-meta-uid"]   = std::to_string(is_s3fs_uid ? s3fs_uid : geteuid());
-        dummy_header["x-amz-meta-gid"]   = std::to_string(is_s3fs_gid ? s3fs_gid : getegid());
+        dummy_header["x-amz-meta-uid"]   = std::to_string(is_s3fs_uid ? s3fs_uid : mp_uid);
+        dummy_header["x-amz-meta-gid"]   = std::to_string(is_s3fs_gid ? s3fs_gid : mp_gid);
         dummy_header["x-amz-meta-mode"]  = std::to_string(S_IFDIR | (~dirmask & (S_IRWXU | S_IRWXG | S_IRWXO)));
         dummy_header["x-amz-meta-atime"] = "0";
         dummy_header["x-amz-meta-ctime"] = "0";
