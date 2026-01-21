@@ -22,10 +22,10 @@ jobs:
             g++ libtool pkg-config \
             fuse3 \
             libc6 \
-            libcurl3t64-gnutls-dev \
+            libcurl4-openssl-dev \
             libfuse3-dev \
             libgcrypt20 \
-            libgnutls30t64 \
+            libssl-dev \
             libstdc++6 \
             libxml2-dev \
             media-types
