@@ -1,0 +1,70 @@
+name: Build .deb
+
+on:
+  push:
+    branches:
+      - docker-build
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-amd64:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y autoconf automake build-essential checkinstall \
+            g++ libtool pkg-config \
+            fuse \
+            libc6 \
+            libcurl3t64-gnutls-dev \
+            libfuse2t64-dev \
+            libgcrypt20 \
+            libgnutls30t64 \
+            libstdc++6 \
+            libxml2-dev \
+            media-types
+            # fuse3 libcurl4-openssl-dev libfuse3-dev libssl-dev
+
+      - name: Build
+        run: |
+          ./autogen.sh
+          ./configure --prefix=/usr --with-openssl
+          make -j$(nproc)
+
+      - name: Create .deb
+        run: |
+          ./create_deb.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: s3fs-fuse_1.97-1-agentwork_amd64
+          path: "*.deb"
+
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Delete existing release if it exists
+          gh release delete v1.97-1-agentwork --yes || true
+
+          # Create new release with the .deb
+          gh release create v1.97-1-agentwork \
+            --title "s3fs-fuse 1.97-1-agentwork (amd64)" \
+            --notes "Pre-built amd64 .deb package with fix for \`allow_other\` + \`compat_dir\` uid/gid issue.
+
+          ## Install on Debian/Ubuntu (amd64)
+
+          \`\`\`bash
+          wget https://github.com/ferm-ai/s3fs-fuse/releases/download/v1.97-1-agentwork/s3fs-fuse_1.97-1-agentwork_amd64.deb
+          sudo dpkg -i s3fs-fuse_1.97-1-agentwork_amd64.deb
+          sudo apt-get install -f  # Install any missing dependencies
+          \`\`\`
+          " \
+            s3fs-fuse_1.97-1-agentwork_amd64.deb
