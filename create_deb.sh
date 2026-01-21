@@ -8,9 +8,9 @@ checkinstall \
   --default \
   --pkgname=s3fs-fuse \
   --pkgversion=1.97 \
-  --pkgrelease=1 \
+  --pkgrelease=1-agentwork \
   --pkglicense=GPL-2.0 \
-  --pakdir=/output \
+  --pakdir=. \
   --maintainer="malthe@agentwork.so" \
   --requires="fuse,libc6,libcurl3t64-gnutls,libfuse2t64,libgcrypt20,libgnutls30t64,libstdc++6,libxml2,media-types" \
   make install
