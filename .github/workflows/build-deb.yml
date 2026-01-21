@@ -20,10 +20,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y autoconf automake build-essential checkinstall \
             g++ libtool pkg-config \
-            fuse \
+            fuse3 \
             libc6 \
             libcurl3t64-gnutls-dev \
-            libfuse2t64-dev \
+            libfuse3-dev \
             libgcrypt20 \
             libgnutls30t64 \
             libstdc++6 \
