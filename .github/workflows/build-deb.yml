@@ -20,9 +20,7 @@ jobs:
 
       - name: Extract .deb from container
         run: |
-          docker create --name s3fs-temp s3fs-build
-          docker cp s3fs-temp:/s3fs-fuse/s3fs-fuse_1.97-1-agentwork_amd64.deb .
-          docker rm s3fs-temp
+          docker run --rm -v "$(pwd)":/host s3fs-build cp '/s3fs-fuse/s3fs-fuse_1.97-1-agentwork_amd64.deb' /host/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
