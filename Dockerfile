@@ -30,5 +30,8 @@ RUN ./autogen.sh \
     && ./configure --prefix=/usr --with-openssl \
     && make -j$(nproc)
 
+# Build .deb package
+RUN ./create_deb.sh
+
 # Default command shows the built binary info
 CMD ["./src/s3fs", "--version"]
