@@ -19,8 +19,17 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y autoconf automake build-essential checkinstall \
-            fuse3 g++ libcurl4-openssl-dev libfuse3-dev libssl-dev \
-            libtool libxml2-dev pkg-config
+            g++ libtool pkg-config \
+            fuse \
+            libc6 \
+            libcurl3t64-gnutls-dev \
+            libfuse2t64-dev \
+            libgcrypt20 \
+            libgnutls30t64 \
+            libstdc++6 \
+            libxml2-dev \
+            media-types
+            # fuse3 libcurl4-openssl-dev libfuse3-dev libssl-dev
 
       - name: Build
         run: |
@@ -30,15 +39,7 @@ jobs:
 
       - name: Create .deb
         run: |
-          sudo checkinstall --install=no --fstrans=yes --default \
-            --pkgname=s3fs-fuse \
-            --pkgversion=1.97 \
-            --pkgrelease=1-agentwork \
-            --pkglicense=GPL-2.0 \
-            --pakdir=. \
-            --maintainer="malthe@agentwork.so" \
-            --nodoc \
-            make install
+          ./create_deb.sh
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
