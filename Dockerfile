@@ -1,4 +1,4 @@
-FROM debian:trixie
+FROM ubuntu:24.04
 
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive

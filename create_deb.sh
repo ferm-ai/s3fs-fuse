@@ -12,7 +12,7 @@ checkinstall \
   --pkglicense=GPL-2.0 \
   --pakdir=. \
   --maintainer="malthe@agentwork.so" \
-  --requires="fuse3,libc6,libcurl4t64,libfuse3-4,libgcrypt20,libssl3t64,libstdc++6,libxml2,media-types" \
+  --requires="fuse3,libc6,libcurl4t64,libfuse3-4,libgcc-s1,libgcrypt20,libssl3t64,libstdc++6,libxml2,media-types" \
   make install
 
 # Requirements
